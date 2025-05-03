@@ -84,6 +84,7 @@ export class AuthService {
   private generateRefreshToken(user: any) {
     const payload = {
       sub: user.id,
+      role: user.role,
     };
     return this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,

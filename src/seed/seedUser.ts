@@ -1,10 +1,11 @@
-import { hash } from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { db } from '../db/config.drizzle';
 import { users } from '../schema/user';
 
 async function seed() {
   try {
-    const hashedPassword = await hash('password123', 10);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash("password123", salt);
 
     await db.insert(users).values([
       {

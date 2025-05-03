@@ -6,7 +6,12 @@ import { eq } from 'drizzle-orm';
 @Injectable()
 export class AuthRepository {
   async findUserByEmail(email: string) {
-    return await db.select().from(users).where(eq(users.email, email));
+    console.log('email', email);
+  
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+
+    // console.log(user);
+    return user;
   }
 
   async createUser(data: any) {

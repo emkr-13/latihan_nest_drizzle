@@ -24,15 +24,18 @@ export class AuthService {
 
   async login(dto: LoginDto) {
     const user = await this.authRepo.findUserByEmail(dto.email);
-    
-    if (!user || !(await bcrypt.compare(dto.password,user[0].password ))) {
+      // Pastikan user ditemukan
+  if (!user) {
+    throw new Error('Invalid credentials');
+  }
+
+    if (!user || !(await bcrypt.compare(dto.password,user.password ))) {
       throw new Error('Invalid credentials');
     }
 
     const accessToken = this.jwtService.sign({
-      sub: user[0].id,
-      email: user[0].id,
-      role: user[0].role,
+      sub: user.id,
+      email: user.email,
     });
 
     return { accessToken };

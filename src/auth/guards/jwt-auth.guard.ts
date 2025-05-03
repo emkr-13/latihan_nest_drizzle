@@ -1,3 +1,4 @@
+// src/auth/guards/jwt-auth.guard.ts
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
@@ -14,6 +15,16 @@ export class JwtAuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
+      // Jika tidak ada token, cek apakah endpoint boleh dilewati
+      const skipIfNoJWT = this.reflector.getAllAndOverride<boolean>('skipIfNoJWT', [
+        context.getHandler(),
+        context.getClass(),
+      ]);
+
+      if (skipIfNoJWT) {
+        return true; // Melewati jika diperbolehkan
+      }
+
       return false;
     }
 

@@ -75,6 +75,8 @@ export class AuthService {
       email: user.email,
       role: user.role,
     };
+    // console.log('JWT Secret:', process.env.JWT_SECRET);
+    // console.log(process.env.AUTH_TOKEN_EXP)
     return this.jwtService.sign(payload, {
       secret: process.env.JWT_SECRET,
       expiresIn: process.env.AUTH_TOKEN_EXP,

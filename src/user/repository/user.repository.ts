@@ -8,7 +8,12 @@ import { eq } from 'drizzle-orm';
 export class UserRepository {
   async findUserById(id: string) {
     const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user;
+    let datauser = {
+      email: user.email,
+      fullname: user.fullname,
+      usercreated: user.createdAt,
+    };
+    return datauser;
   }
 
   async updateUserFullname(id: string, fullname: string) {

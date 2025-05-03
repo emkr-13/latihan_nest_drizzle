@@ -1,6 +1,6 @@
 import { Controller, Get, Request, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../utils/guards/jwt-auth.guard';
 import { UserService } from './user.service';
 
 @ApiTags('User')
@@ -13,6 +13,10 @@ export class UserController {
   @Get('profile')
   @ApiResponse({ status: 200, description: 'Return user profile.' })
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden. Invalid or expired token.',
+  })
   async getProfile(@Request() req) {
     return this.userService.getProfile(req.user.sub);
   }

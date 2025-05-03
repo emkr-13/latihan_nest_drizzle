@@ -40,26 +40,4 @@ import { UserModule } from './user/user.module';
     },
   ],
 })
-export class AppModule implements OnApplicationBootstrap {
-  constructor(private readonly configService: ConfigService) {}
-
-  onApplicationBootstrap() {
-    const app = (this as any).appRef; // Akses internal NestJS app reference
-    if (!app) return;
-
-    const config = new DocumentBuilder()
-      .setTitle('E-commerce API')
-      .setDescription('API documentation for E-commerce Mini Project')
-      .setVersion('1.0')
-      .addTag('Auth', 'Authentication endpoints')
-      .addTag('User', 'User profile and management')
-      .addBearerAuth()
-      .build();
-
-    const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document);
-    console.log('✅ Swagger setup complete');
-    const port = this.configService.get('APP_PORT') || 3080;
-    console.log(`🚀 Swagger available at http://localhost:${port}/api`);
-  }
-}
+export class AppModule {}

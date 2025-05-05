@@ -6,7 +6,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RolesGuard } from '../utils/guards/roles.guard';
 
-
 @Module({
   imports: [
     JwtModule.registerAsync({
@@ -21,6 +20,6 @@ import { RolesGuard } from '../utils/guards/roles.guard';
     }),
   ],
   controllers: [CategoriesController],
-  providers: [CategoriesService, CategoriesRepository,RolesGuard],
+  providers: [CategoriesService, CategoriesRepository, RolesGuard],
 })
 export class CategoriesModule {}

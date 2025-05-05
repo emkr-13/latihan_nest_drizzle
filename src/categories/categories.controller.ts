@@ -17,6 +17,7 @@ import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, } from '@nestjs/swag
 import { RolesGuard } from '../utils/guards/roles.guard';
 import { Roles } from '../utils/decorators/roles.decorator';
 import { JwtAuthGuard } from '../utils/guards/jwt-auth.guard';
+import { SkipJwtAuth } from '../utils/decorators/skip-jwt-auth.decorator';
 
 @ApiTags('Categories')
 @Controller('categories')
@@ -34,6 +35,7 @@ export class CategoriesController {
     return this.categoriesService.create(createCategoryDto);
   }
 
+  @SkipJwtAuth()
   @Get('category/all')
   @ApiOperation({ summary: 'Get all categories with pagination' })
   @ApiResponse({
@@ -44,6 +46,7 @@ export class CategoriesController {
     return this.categoriesService.findAll(query);
   }
 
+  @SkipJwtAuth()
   @Get('category/detail/:id')
   @ApiOperation({ summary: 'Get category details by ID' })
   @ApiResponse({ status: 200, description: 'Category retrieved successfully.' })

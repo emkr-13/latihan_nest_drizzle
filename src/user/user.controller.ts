@@ -63,4 +63,18 @@ export class UserController {
   async createUser(@Request() req, @Body() dto: CreateUserDto) {
     return this.userService.createUser(req.user.role, dto);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @Post('logout')
+  @ApiOperation({ summary: 'Get user profile' })
+  @ApiResponse({ status: 200, description: 'Return user profile.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden. Invalid or expired token.',
+  })
+  async logout(@Request() req) {
+    return this.userService.userLogout(req.user.sub);
+  }
 }

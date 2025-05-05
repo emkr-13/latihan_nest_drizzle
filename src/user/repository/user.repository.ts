@@ -38,4 +38,14 @@ export class UserRepository {
     // console.log(user);
     return user;
   }
+
+  async updateForLogout(id: string) {
+    return await db
+      .update(users)
+      .set({
+        refreshToken: null,
+        refreshTokenExp: null,
+      })
+      .where(eq(users.id, id));
+  }
 }

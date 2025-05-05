@@ -1,17 +1,15 @@
-import { 
-  Injectable, 
-  ConflictException, 
+import {
+  Injectable,
+  ConflictException,
   UnauthorizedException,
   BadRequestException,
-  ForbiddenException 
+  ForbiddenException,
 } from '@nestjs/common';
 import { UserRepository } from './repository/user.repository';
 import { ApiResponse } from '../utils/helper/api-response';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
-
-
 
 @Injectable()
 export class UserService {
@@ -27,7 +25,10 @@ export class UserService {
 
   async updateProfile(userId: string, dto: UpdateUserDto) {
     try {
-      const updatedUser = await this.userRepo.updateUserFullname(userId, dto.fullname);
+      const updatedUser = await this.userRepo.updateUserFullname(
+        userId,
+        dto.fullname,
+      );
       return ApiResponse.success('Profile updated successfully', {
         fullname: updatedUser.fullname,
       });
@@ -65,5 +66,10 @@ export class UserService {
       fullname: user.fullname,
       role: user.role,
     });
+  }
+
+  async userLogout(userId: string) {
+    const logout = await this.userLogout(userId);
+    return ApiResponse.success('Logout successfully');
   }
 }

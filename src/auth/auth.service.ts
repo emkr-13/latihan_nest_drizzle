@@ -33,10 +33,21 @@ export class AuthService {
       fullname: dto.fullname,
       role: 'user',
     });
+    const accessToken = this.generateAccessToken(user);
+    const refreshToken = this.generateRefreshToken(user);
+
+    // Simpan refresh token ke database
+    const refreshTokenExp = process.env.REFRESH_TOKEN_EXP || '604800'; // Default 7 days
+    const refreshTokenExpSeconds = parseInt(refreshTokenExp);
+
+    await this.authRepo.updateUser(user.id, {
+      refreshToken,
+      refreshTokenExp: new Date(Date.now() + refreshTokenExpSeconds * 1000),
+    });
 
     return ApiResponse.success('Registration successful', {
-      email: user.email,
-      fullname: user.fullname,
+      token: accessToken,
+      refreshToken,
     });
   }
 

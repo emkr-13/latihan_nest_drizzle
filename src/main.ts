@@ -30,6 +30,7 @@ async function bootstrap() {
     .addTag('Auth', 'Authentication endpoints')
     .addTag('User', 'User profile and management')
     .addTag('Categories', 'Product categories management')
+    .addTag('Products', 'Product management')
     .addBearerAuth()
     .build();
 

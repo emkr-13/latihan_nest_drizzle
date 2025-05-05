@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { CategoriesModule } from './categories/categories.module';
+import { ProductModule } from './product/product.module';
 
 
 
@@ -15,6 +16,7 @@ import { CategoriesModule } from './categories/categories.module';
     AuthModule,
     UserModule,
     CategoriesModule ,
+    ProductModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',

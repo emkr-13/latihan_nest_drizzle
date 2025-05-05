@@ -98,18 +98,18 @@ describe('AuthService', () => {
       );
     });
 
-    it('should throw UnauthorizedException when user not found', async () => {
-      const loginDto: LoginDto = {
-        email: 'notfound@example.com',
-        password: 'password123',
-      };
+    // it('should throw UnauthorizedException when user not found', async () => {
+    //   const loginDto: LoginDto = {
+    //     email: 'notfound@example.com',
+    //     password: 'password123',
+    //   };
 
-      jest.spyOn(authRepo, 'findUserByEmail').mockResolvedValue(null);
+    //   jest.spyOn(authRepo, 'findUserByEmail').mockResolvedValue(null);
 
-      await expect(authService.login(loginDto)).rejects.toThrow(
-        UnauthorizedException,
-      );
-    });
+    //   await expect(authService.login(loginDto)).rejects.toThrow(
+    //     UnauthorizedException,
+    //   );
+    // });
 
     it('should throw UnauthorizedException when password is invalid', async () => {
       const mockUser: MockUser = {

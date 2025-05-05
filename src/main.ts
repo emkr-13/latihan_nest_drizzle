@@ -31,6 +31,7 @@ async function bootstrap() {
     .addTag('User', 'User profile and management')
     .addTag('Categories', 'Product categories management')
     .addTag('Products', 'Product management')
+    .addTag('Reviews', 'Product management')
     .addBearerAuth()
     .build();
 

@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
-import { ProductService } from './product.service';
-import { ProductController } from './product.controller';
-import { ProductRepository } from './repository/product.repository';
+import { ReviewService } from './review.service';
+import { ReviewController } from './review.controller';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Review, ReviewSchema } from '../mongoSchema/review.schema';
+import { ReviewRepository } from './repository/review.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RolesGuard } from '../utils/guards/roles.guard';
 
-
 @Module({
   imports: [
+    MongooseModule.forFeature([{ name: Review.name, schema: ReviewSchema }]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -20,7 +22,7 @@ import { RolesGuard } from '../utils/guards/roles.guard';
       inject: [ConfigService],
     }),
   ],
-  controllers: [ProductController],
-  providers: [ProductService, ProductRepository,RolesGuard],
+  controllers: [ReviewController],
+  providers: [ReviewService, ReviewRepository,RolesGuard],
 })
-export class ProductModule {}
+export class ReviewModule {}

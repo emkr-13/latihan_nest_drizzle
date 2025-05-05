@@ -8,7 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ProductModule } from './product/product.module';
-
+import { ReviewModule } from './review/review.module';
 
 
 @Module({
@@ -17,6 +17,7 @@ import { ProductModule } from './product/product.module';
     UserModule,
     CategoriesModule ,
     ProductModule,
+    ReviewModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',

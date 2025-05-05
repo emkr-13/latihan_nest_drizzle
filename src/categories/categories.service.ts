@@ -4,6 +4,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { QueryCategoriesDto } from './dto/query-categories.dto';
 import { ApiResponse } from '../utils/helper/api-response';
+import { calculatePagination, PaginationResponse } from '../utils/helper/pagination';
 
 @Injectable()
 export class CategoriesService {
@@ -15,10 +16,35 @@ export class CategoriesService {
   }
 
   async findAll(query: QueryCategoriesDto) {
-    const result = await this.categoriesRepo.findAll(query);
+    const { search, page = 1, limit = 10 } = query;
+    
+    // Get data from repository
+    const result = await this.categoriesRepo.findAll({
+      search,
+      page: Number(page),
+      limit: Number(limit),
+    });
+
+    // Calculate pagination metadata
+    const pagination: PaginationResponse = calculatePagination(
+      result.meta.total,
+      Number(page),
+      Number(limit)
+    );
+
     return ApiResponse.success('Categories retrieved successfully', {
-      categories: result.data,
-      meta: result.meta,
+      data: result.data,
+      pagination: {
+        total_data: pagination.total_data,
+        total_page: pagination.total_page,
+        current_page: pagination.current,
+        per_page: limit,
+        first_page: pagination.first_page,
+        last_page: pagination.last_page,
+        next_page: pagination.next,
+        prev_page: pagination.prev,
+        page_numbers: pagination.detail,
+      },
     });
   }
 

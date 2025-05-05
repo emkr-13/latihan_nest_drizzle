@@ -1,17 +1,27 @@
-## Latihan Nest 
+## Latihan Nest
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Teknologi yang digunakan:
+
+- TypeScript
+- Nest Js
+- Drizzle ORM
+
+Database yang digunakan:
+
+- PostgreSQL (database)
+- MongoDB
 
 ## Project setup
 
 ```bash
 $ npm install
 ```
+
 ```bash
 cp .env.example .env
 ```
 
-## Setup Driizle 
+## Setup Driizle
 
 Untuk informasi lebih lanjut, baca dokumentasi resmi di [Drizzle ORM Documentation](https://orm.drizzle.team/docs/get-started/postgresql-new).
 
@@ -35,7 +45,6 @@ Jalankan file seeder sesuai dengan nama file di folder `seed`. Contoh:
 npx ts-node src/seed/seedUser.ts
 ```
 
-
 ## Compile and run the project
 
 ```bash
@@ -48,5 +57,3 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
-
-

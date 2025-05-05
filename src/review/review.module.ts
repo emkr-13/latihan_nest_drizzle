@@ -7,6 +7,7 @@ import { ReviewRepository } from './repository/review.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RolesGuard } from '../utils/guards/roles.guard';
+import { UserModule } from '../user/user.module'; 
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { RolesGuard } from '../utils/guards/roles.guard';
       }),
       inject: [ConfigService],
     }),
+    UserModule,
   ],
   controllers: [ReviewController],
   providers: [ReviewService, ReviewRepository,RolesGuard],

@@ -7,10 +7,14 @@ import { ReviewRepository } from './repository/review.repository';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { ApiResponse } from '../utils/helper/api-response';
+import { UserRepository } from '../user/repository/user.repository';
 
 @Injectable()
 export class ReviewService {
-  constructor(private readonly reviewRepo: ReviewRepository) {}
+  constructor(
+    private readonly reviewRepo: ReviewRepository,
+    private readonly userRepo: UserRepository,
+  ) {}
 
   async create(userId: string, createReviewDto: CreateReviewDto) {
     const review = await this.reviewRepo.create(userId, createReviewDto);
@@ -19,7 +23,22 @@ export class ReviewService {
 
   async findAllByProduct(productId: string) {
     const reviews = await this.reviewRepo.findAllByProduct(productId);
-    return ApiResponse.success('Reviews retrieved successfully', reviews);
+    
+    // Get user details for each review
+    const reviewsWithUsers = await Promise.all(
+      reviews.map(async (review) => {
+        const user = await this.userRepo.findUserById(review.userId);
+        return {
+          ...review.toObject(),
+          user: {
+            fullname: user.fullname,
+            email: user.email,
+          },
+        };
+      }),
+    );
+
+    return ApiResponse.success('Reviews retrieved successfully', reviewsWithUsers);
   }
 
   async findOne(id: string) {

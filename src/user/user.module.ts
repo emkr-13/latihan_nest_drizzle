@@ -21,5 +21,6 @@ import { RolesGuard } from '../utils/guards/roles.guard';
   ],
   controllers: [UserController],
   providers: [UserService, UserRepository, RolesGuard],
+  exports: [UserRepository],
 })
 export class UserModule {}
